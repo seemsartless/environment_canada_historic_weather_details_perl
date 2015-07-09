@@ -1,10 +1,33 @@
-# Adding historic weather details to my Wholemap photos
-(Thoughts on adding weather data to historic Toronto photos)
+# Perl object to access historic Canadian weather details
 
-## Introduction
-We can get historic weather data from the web through the Environment Canada website, and I have about 1,800 historic photos with specific dates, so why not add a new table with weather data for the dates that I have, then display that along with the other meta-data I have for each photo, like map location, exact date, etc...
+## Quick Perl usage:
+```perl
+use weatherDataFromEnvironmentCanada;
 
-## Data source - Environment Canada has historic weather data
+my $weatherDataOBJ = weatherDataFromEnvironmentCanada->new(
+		'weatherStationID' => '5051',
+		'weatherDate' => '1944-12-11'
+);
+
+if ( $weatherDataOBJ->wasErrors() ) {
+		print "Error creating weather object\n";
+		print $weatherDataOBJ->errorString();
+} else {
+	  my $maxTempValue = $weatherDataOBJ->weatherMeasurementValue("maxTemp");
+	  my $maxTempUnits = $weatherDataOBJ->weatherMeasurementUnits("maxTemp");
+	  print "Back on December 11th, 1944 the max temperature in Toronto was ";
+	  print $maxTempValue . " " . $maxTempUnits;
+}	  
+
+# Reads the data from:
+#    http://climate.weather.gc.ca/climateData/bulkdata_e.html?format=csv
+#    &stationID=5051&Year=1944&Month=12&Day=11
+#    &timeframe=2&submit=Download+Data
+
+
+```
+
+## Data source - Environment Canada historic weather data
 
 We can get historic weather data from the web, like:
 http://climate.weather.gc.ca/climateData/hourlydata_e.html?timeframe=1&Prov=ON&StationID=5051&mlyRange=1840-01-01%7C2006-12-01&Year=1958&Month=4&Day=18&cmdB2=Go# 
@@ -15,9 +38,13 @@ http://climate.weather.gc.ca/climateData/bulkdata_e.html?format=csv&stationID=50
 But really we're more interested in the daily high and low, so I think this link is more useful:
 http://climate.weather.gc.ca/climateData/bulkdata_e.html?format=csv&stationID=5051&Year=1968&Month=1&Day=1&timeframe=2&submit=Download+Data
 
+## Initial inspiration
+
+I run a website that catalogs historic Toronto photos, and realized it would be interesting to add weather details for each of the photos. For instance there are a few photos of all the snow on December 11th, 1944 - http://wholemap.com/historic/toronto.php?month=December&day=11
+
 ## Data to store in our database
 
-Here's the data we can get from the CSV file that we'd like to store in the wholemap database for later access:
+Here's the data we can get from the CSV file that we'd like to store in the Wholemap database for later access:
 - Station ID - the stationID parameter
 - historical date
 - date this data was accessed from the Environment Canada website
@@ -34,9 +61,9 @@ Here's the data we can get from the CSV file that we'd like to store in the whol
 - Snow on ground (cm)
 - Snow on ground notes
 
-## Background and related web pages 
+## Related web pages 
 
-No need to reinvent the wheel here, and maybe I'll do something in R for practice? Here's a detailed blog post on using the bulkdata_e.html call:
+Here's a detailed blog post on using the bulkdata_e.html call:
 
 http://www.fromthebottomoftheheap.net/2015/01/14/harvesting-canadian-climate-data/
 
