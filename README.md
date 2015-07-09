@@ -1,23 +1,24 @@
 # Perl object to access historic Canadian weather details
 
-## Quick Perl usage:
+## Quick Perl usage (readme-quick-usage.pl):
 ```perl
 use weatherDataFromEnvironmentCanada;
 
 my $weatherDataOBJ = weatherDataFromEnvironmentCanada->new(
-		'weatherStationID' => '5051',
-		'weatherDate' => '1944-12-11'
+        'weatherStationID' => '5051',
+        'weatherDate' => '1944-12-11'
 );
 
 if ( $weatherDataOBJ->wasErrors() ) {
-		print "Error creating weather object\n";
-		print $weatherDataOBJ->errorString();
+        print "Error creating weather object\n";
+        print $weatherDataOBJ->errorString();
 } else {
-	  my $maxTempValue = $weatherDataOBJ->weatherMeasurementValue("maxTemp");
-	  my $maxTempUnits = $weatherDataOBJ->weatherMeasurementUnits("maxTemp");
-	  print "Back on December 11th, 1944 the max temperature in Toronto was ";
-	  print $maxTempValue . " " . $maxTempUnits;
-}	  
+      print "Back on December 11th, 1944 the max temperature in Toronto was ";
+      print $weatherDataOBJ->weatherMeasurementValue("maxTemp") . " ";
+	  print $weatherDataOBJ->weatherMeasurementUnits("maxTemp") . "\n\n";
+	  print "Summary: " . $weatherDataOBJ->weatherSummary();
+	  print "\n\n(Using version " . $weatherDataOBJ->weatherObjectVersion() . " of the object.)";
+}
 
 # Reads the data from:
 #    http://climate.weather.gc.ca/climateData/bulkdata_e.html?format=csv
