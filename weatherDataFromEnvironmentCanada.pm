@@ -4,11 +4,21 @@ use strict;
 
 use LWP;
 use LWP::RobotUA;
-
+#
+# Perl object to read historic weather data from Environment Canada.
+#
+# Written by David Sky - david.s.toronto@gmail.com - http://seemsartless.com/github
+#
+# The most recent version of this file can be found on Github at:
+#    https://github.com/seemsartless/environment_canada_historic_weather_details_perl
+#
+# Use at your own risk, I make no promises. See the full legal comment at the bottom of this file.
+#
+#
 # To-do: Handle 'T' for trace snow, like: 1990-02-04
 # To-do: Handle no data items, like May 2004
 
-my $objectVersionNumber = "0.8"; # The first public release!
+my $objectVersionNumber = "0.8"; # The first public release! Minor update 2 w/ more comments
 
 my $errorString = "";
 my $warningString = "";
@@ -411,3 +421,30 @@ sub __ISOWithPaddedZeros {
 	(my $tY, my $tM, my $tD) = split('-', $ISODate);
 	return $tY . "-" . sprintf("%02d", $tM) . "-" . sprintf("%02d", $tD);
 }
+
+#
+# Before using anything in this file please understand the following:
+#
+# Disclaimer of Warranty.
+#
+#  THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY
+# APPLICABLE LAW.  EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT
+# HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY
+# OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,
+# THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+# PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM
+# IS WITH YOU.  SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF
+# ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+#
+# Limitation of Liability.
+#
+#   IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+# WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MODIFIES AND/OR CONVEYS
+# THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY
+# GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE
+# USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF
+# DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD
+# PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS),
+# EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
+# SUCH DAMAGES.
+#
